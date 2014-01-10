@@ -15,3 +15,6 @@ See also the the [working paper version](http://ideas.repec.org/p/ube/dpvwib/dp0
 
 Note that currently the Matlab bindings are for Matlab version up to 7.0 on Windows 
 (32 bit) and need to be adapted in order to be used with newer versions of Matlab.
+The files turningpoints.f90 and mexf90.f90 contain tricks to generate Matlab MEX
+files, which only work on 32 bit systems. If you want to use the software on
+64 bit systems, you will have to adapt these files.
