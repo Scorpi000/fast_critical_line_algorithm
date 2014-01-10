@@ -2,8 +2,8 @@ A Fast Implementation of Markowitz's Critical Line Algorithm
 ============================================================
 
 This repository provides a fast implementation of Markowitz's Critical Line Algorithm 
-in Fortran with bindings in Matlab and Python. See the README files in [src](./src/) for a 
-description of its usage and compatibility information. The directory [packages](./packages/) 
+in Fortran with bindings in Matlab and Python. See the README files in "src" for a 
+description of its usage and compatibility information. The directory "packages" 
 contains packages with binaries for Matlab and Python.
 
 The details of the algorithm are described in detail in
