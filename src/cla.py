@@ -83,7 +83,8 @@ def turningpoints(ExpReturn, ExpCovariance, LowerBound=None, UpperBound=None, Ma
             UpperBound = 2.*N.ones(nn)
         mu_tp, sigma_tp, weights_tp, lambda_tp, n_tp, error_flag = calcturningpointsgen(
                                                             ExpReturn, ExpCovariance,
-                                                            LowerBound, UpperBound, MaxNTP)
+                                                            MaxNTP,
+                                                            LowerBound, UpperBound)
     if error_flag == 4:
         raise CLAError('turningpoints: Error during execution: '
                         'maximal space allocated for turning points exceeded. '
@@ -400,7 +401,8 @@ def test_cla():
     try:
         # (un)comment following line if necessary
         #~ raise ImportError("fake exception: don't use cvxopt")
-        import cvxopt.cvxprog as cvx
+#        import cvxopt.cvxprog as cvx
+        import cvxopt.solvers as cvx
         import cvxopt.base as B
         # use mosek solver if installed
         try:
