@@ -1,28 +1,35 @@
 ! g95 -c calcturningpointsgen.f90
 
 
-SUBROUTINE calcturningpointsgen(mu, sigma, nn, mu_tps, sig_tps, &
-                        weight_tps, lambda_tps, n_tps, error_flag, max_tps, lower, upper)
+SUBROUTINE calcturningpointsgen(mu_param, sigma_param, nn, mu_tps, sig_tps, &
+                        weight_tps, lambda_tps, n_tps, error_flag, max_tps, &
+                        lower_param, upper_param)
 
   implicit none
 
   ! using allocatable arrays:
-  integer                              :: nn, kx, n_tpx
-  integer                              :: error_flag, max_tps
+  integer, intent(in)                  :: nn
+  integer                              :: n_tpx
+  integer                              :: kx
+  integer, intent(out)                 :: error_flag
+  integer, intent(in)                  :: max_tps
 
   real(8), dimension(:,:), allocatable :: Ai
 
   real(8), dimension(nn) :: lower, upper
+  real(8), dimension(nn), intent(in) :: lower_param, upper_param
   real(8), dimension(nn) :: weight_max, weight_min
   integer, dimension(nn) :: ind_mu
 
-  real(8), dimension(nn)  :: mu
+  real(8), dimension(nn), intent(in)    :: mu_param
+  real(8), dimension(nn,nn), intent(in) :: sigma_param
+  real(8), dimension(nn)    :: mu
   real(8), dimension(nn,nn) :: sigma
 
 
   ! the turning points
-  real(8), dimension(max_tps)     :: mu_tps, sig_tps, lambda_tps
-  real(8), dimension(nn,max_tps)  :: weight_tps
+  real(8), dimension(max_tps), intent(out)     :: mu_tps, sig_tps, lambda_tps
+  real(8), dimension(nn,max_tps), intent(out)  :: weight_tps
   
   integer :: print_on = 0
   
@@ -32,7 +39,7 @@ SUBROUTINE calcturningpointsgen(mu, sigma, nn, mu_tps, sig_tps, &
   real(8)                   :: mu_max, mu_min, sig, lambda_min, lambda_max
 
   ! the actual number of turning points:
-  integer                   :: n_tps
+  integer, intent(out)      :: n_tps
 
 
   ! these declarations are needed only for testing:
@@ -42,6 +49,10 @@ SUBROUTINE calcturningpointsgen(mu, sigma, nn, mu_tps, sig_tps, &
   real(8) :: auxv1(1), auxv2(1)
   real(8) :: rand_shift = 0.0d0   ! default value
   !-------------------
+  lower = lower_param
+  upper = upper_param
+  mu = mu_param
+  sigma = sigma_param
 
   error_flag = 0
 

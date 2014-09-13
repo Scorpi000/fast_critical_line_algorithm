@@ -1,23 +1,26 @@
 ! g95  turn.f90 -o turn
 ! g95 -O2 turn.f90 -o turn
 ! g95 -g turn.f90 -o turn
+! f2py -c calcturningpoints.f90 calcturningpointsgen.f90 -m cla_fortran
 
 SUBROUTINE calcturningpoints(mu, sigma, nn, mu_tps, sig_tps, weight_tps, lambda_tps, n_tps, error_flag, max_tps)
   implicit none
   
   ! using allocatable arrays:
-  integer                              :: nn, kx, error_flag, max_tps
+  integer, intent(in)                  :: nn, max_tps
+  integer                              :: kx
+  integer, intent(out)                 :: error_flag
   integer                              :: n_tpx
   
   real(8), dimension(:,:), allocatable :: Ai
   !~ real(8), dimension(:),   allocatable :: mu
   !~ real(8), dimension(:,:), allocatable :: sigma
-  real(8), dimension(nn)  :: mu
-  real(8), dimension(nn,nn) :: sigma
+  real(8), dimension(nn), intent(in)  :: mu
+  real(8), dimension(nn,nn), intent(in) :: sigma
 
   ! the turning points
-  real(8), dimension(max_tps)  :: mu_tps, sig_tps, lambda_tps
-  real(8), dimension(nn,max_tps)  :: weight_tps
+  real(8), dimension(max_tps), intent(out)  :: mu_tps, sig_tps, lambda_tps
+  real(8), dimension(nn,max_tps), intent(out)  :: weight_tps
   !----------------------------------
 
   integer                   :: i_min, i_max, ii_last
@@ -25,7 +28,7 @@ SUBROUTINE calcturningpoints(mu, sigma, nn, mu_tps, sig_tps, weight_tps, lambda_
   real(8)                   :: mu_max, mu_min, sig, lambda_min, lambda_max
 
   ! the actual number of turning points:
-  integer                   :: n_tps
+  integer, intent(out)                   :: n_tps
 
 
   ! these declarations are needed only for testing:
